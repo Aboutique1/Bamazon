@@ -2,6 +2,8 @@ var mysql = require('mysql')
 require('dotenv').config()
 var arrayToTable = require('array-to-table')
 var inquirer = require('inquirer')
+var Promise = require('bluebird')
+
 
 var connection = mysql.createConnection({
     host: process.env.DB_HOST,
@@ -34,10 +36,40 @@ connection.query('SELECT * FROM products', function(error,results,fields){
     inquirer.prompt(questions).then(function(answer){
         console.log("You've selected item " + answer['Select Product'])
         console.log("You've selected a total of " + answer['Quantity'])
+        var array = []
+        
+        function getQuantity(){
+            return new Promise(function(resolve, reject){
+                connection.query(`SELECT stock_quantity FROM products WHERE \`item_id\` = ${parseInt(answer['Quantity'])}`, function(error2, quantity){
+                    if(error2){
+                        reject(new Error('Ooops, something broke!'));
+
+                    } 
+                
+                        console.log(quantity[0].stock_quantity)
+                        resolve(quantity[0].stock_quantity)                      
+                    
+                    
+                })
+            }) 
+        }
+        
+        getQuantity().then(function(trueQuantity){
+            if(10 > parseInt(trueQuantity)){
+                console.log('Our stock inventory is lower than the number of quantity requested.')
+            }
+            else{
+                console.log('We have enough. Your order will be completed.')
+            }
+        }).catch(function(error){
+            console.log(error)
+        })
+        
 
     })
 })
 
-connection.end()
+
+
 
 
