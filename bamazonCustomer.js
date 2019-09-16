@@ -40,8 +40,8 @@ connection.query('SELECT * FROM products', function(error,results,fields){
         
         function getQuantity(){
             return new Promise(function(resolve, reject){
-                connection.query(`SELECT stock_quantity FROM products WHERE \`item_id\` = ${parseInt(answer['Quantity'])}`, function(error2, quantity){
-                    if(error2){
+                connection.query(`SELECT stock_quantity FROM products WHERE \`item_id\` = ${parseInt(answer['Select Product'])}`, function(error2, quantity){
+                        if(error2){
                         reject(new Error('Ooops, something broke!'));
 
                     } 
@@ -55,7 +55,7 @@ connection.query('SELECT * FROM products', function(error,results,fields){
         }
         
         getQuantity().then(function(trueQuantity){
-            if(10 > parseInt(trueQuantity)){
+            if(100/ > parseInt(trueQuantity)){
                 console.log('Our stock inventory is lower than the number of quantity requested.')
             }
             else{
