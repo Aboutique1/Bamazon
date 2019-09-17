@@ -32,9 +32,7 @@ var questions = [{
 connection.query('SELECT * FROM products', function(error,results,fields){
     if(error) throw error
 
-    console.log(arrayToTable(results))
-    inquirer.prompt(questions).then(function(answer){
-        console.log(answer.Quantity)
+node        console.log(answer.Quantity)
         if (parseInt(answer.Quantity) > 10) {
             console.log('Our stock inventory is lower than the number of quantity requested.')
         }
