@@ -34,6 +34,18 @@ connection.query('SELECT * FROM products', function(error,results,fields){
 
     console.log(arrayToTable(results))
     inquirer.prompt(questions).then(function(answer){
+        console.log(answer.Quantity)
+        if (parseInt(answer.Quantity) > 10) {
+            console.log('Our stock inventory is lower than the number of quantity requested.')
+        }
+        else{
+            console.log('We have enough. Your order will be completed.')
+        }
+    }).catch(function(error){
+        console.log(error) 
+});   
+
+
         console.log("You've selected item " + answer['Select Product'])
         console.log("You've selected a total of " + answer['Quantity'])
         var array = []
@@ -54,19 +66,20 @@ connection.query('SELECT * FROM products', function(error,results,fields){
             }) 
         }
         
-        getQuantity().then(function(trueQuantity){
-            if(100/ > parseInt(trueQuantity)){
-                console.log('Our stock inventory is lower than the number of quantity requested.')
-            }
-            else{
-                console.log('We have enough. Your order will be completed.')
-            }
-        }).catch(function(error){
-            console.log(error)
-        })
+        // getQuantity().then(function(trueQuantity){
+
+        //     if(10 > parseInt(trueQuantity)){
+        //         console.log('Our stock inventory is lower than the number of quantity requested.')
+        //     }
+        //     else{
+        //         console.log('We have enough. Your order will be completed.')
+        //     }
+        // }).catch(function(error){
+        //     console.log(error)
+        // })
         
 
-    })
+    
 })
 
 
