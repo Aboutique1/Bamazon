@@ -32,7 +32,7 @@ var questions = [{
 connection.query('SELECT * FROM products', function(error,results,fields){
     if(error) throw error
 
-node        console.log(answer.Quantity)
+       console.log(answer.Quantity)
         if (parseInt(answer.Quantity) > 10) {
             console.log('Our stock inventory is lower than the number of quantity requested.')
         }
@@ -64,21 +64,21 @@ node        console.log(answer.Quantity)
             }) 
         }
         
-        // getQuantity().then(function(trueQuantity){
+             getQuantity().then(function(trueQuantity){
 
-        //     if(10 > parseInt(trueQuantity)){
-        //         console.log('Our stock inventory is lower than the number of quantity requested.')
-        //     }
-        //     else{
-        //         console.log('We have enough. Your order will be completed.')
-        //     }
-        // }).catch(function(error){
-        //     console.log(error)
-        // })
+             if(10 > parseInt(trueQuantity)){
+                   console.log('Our stock inventory is lower than the number of quantity requested.')
+              }
+              else{
+                 console.log('We have enough. Your order will be completed.')
+              }
+         }).catch(function(error){
+             console.log(error)
+         })
         
 
     
-})
+
 
 
 
