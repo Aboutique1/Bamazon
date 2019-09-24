@@ -39,8 +39,7 @@ connection.query('SELECT * FROM products', function(error,results,fields){
         else{
             console.log('We have enough. Your order will be completed.')
         }
-    }).catch(function(error){
-        console.log(error) 
+
 });   
 
 
