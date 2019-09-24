@@ -15,71 +15,44 @@ var connection = mysql.createConnection({
 
 connection.connect()
 
+
 var questions = [{
-    type:'input',
-    name:'Select Product',
-    message:'Which product do you want? (item_id)'
+        type: 'input',
+        name: 'Select Product',
+        message: 'Which product do you want? (item_id)'
 
-},
-{
-    type:'input',
-    name:'Quantity',
-    message:'How many do you want? (stock_quantity)'
-}
+    },
+    {
+        type: 'input',
+        name: 'Quantity',
+        message: 'How many do you want? (stock_quantity)'
+    }
 ]
+var quantityrequested
+var productidrequested
 
+connection.query('SELECT * FROM products', function (error, results, fields) {
+    if (error) throw error
+  //  console.log (results) 
+    
+    console.log(arrayToTable(results))
+    inquirer.prompt(questions).then(function (answer) {
 
-connection.query('SELECT * FROM products', function(error,results,fields){
-    if(error) throw error
-
-       console.log(answer.Quantity)
-        if (parseInt(answer.Quantity) > 10) {
+        
+        var productselected = results[answer["Select Product"]-1]
+        console.log (productselected.product_name )
+        console.log(answer.Quantity)
+        var instock = productselected.stock_quantity
+        if (parseInt(answer.Quantity) > instock) {
             console.log('Our stock inventory is lower than the number of quantity requested.')
-        }
-        else{
+        } else {
             console.log('We have enough. Your order will be completed.')
         }
 
-});   
-
-
-        console.log("You've selected item " + answer['Select Product'])
-        console.log("You've selected a total of " + answer['Quantity'])
+        console.log("You've selected item " + answer["Select Product"])
+        console.log("You've selected a total of " + answer["Quantity"])
         var array = []
-        
-        function getQuantity(){
-            return new Promise(function(resolve, reject){
-                connection.query(`SELECT stock_quantity FROM products WHERE \`item_id\` = ${parseInt(answer['Select Product'])}`, function(error2, quantity){
-                        if(error2){
-                        reject(new Error('Ooops, something broke!'));
 
-                    } 
-                
-                        console.log(quantity[0].stock_quantity)
-                        resolve(quantity[0].stock_quantity)                      
-                    
-                    
-                })
-            }) 
-        }
-        
-             getQuantity().then(function(trueQuantity){
-
-             if(10 > parseInt(trueQuantity)){
-                   console.log('Our stock inventory is lower than the number of quantity requested.')
-              }
-              else{
-                 console.log('We have enough. Your order will be completed.')
-              }
-         }).catch(function(error){
-             console.log(error)
-         })
-        
-
-    
-
-
-
-
-
-
+       
+    });
+});
