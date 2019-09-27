@@ -1,3 +1,4 @@
+// update bamazon set stock_quantity = 
 var mysql = require('mysql')
 require('dotenv').config()
 var arrayToTable = require('array-to-table')
@@ -47,7 +48,13 @@ connection.query('SELECT * FROM products', function (error, results, fields) {
             console.log('Our stock inventory is lower than the number of quantity requested.')
         } else {
             console.log('We have enough. Your order will be completed.')
+            var price= productselected.cost 
+            var orderCost= price * answer.Quantity
+            console.log ("Your Order Cost is $" + orderCost.toFixed(2))
+            var newQuantity= instock - answer.Quantity
+            connection.query ('update products set stock_quantity = ' + newQuantity + " where item_id = " + productselected.item_id + ";")
         }
+        
 
         console.log("You've selected item " + answer["Select Product"])
         console.log("You've selected a total of " + answer["Quantity"])
