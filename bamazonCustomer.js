@@ -59,6 +59,7 @@ connection.query('SELECT * FROM products', function (error, results, fields) {
         console.log("You've selected item " + answer["Select Product"])
         console.log("You've selected a total of " + answer["Quantity"])
         var array = []
+        
 
        
     });
